@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fixify - Soluciones para tu hogar</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Open+Sans&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Página Principal -->
+    <div class="main-container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="logo">Fixify</h1>
+            <button class="login-btn" onclick="showLogin()">Ingresar</button>
+        </header>
+
+        <!-- Sección Inicio -->
+        <section id="inicio" class="section hero">
+            <h2>Soluciones rápidas para tu hogar</h2>
+            <p>Suscríbete desde $20 al mes y olvídate de los problemas cotidianos.</p>
+            <button class="cta-btn" onclick="scrollToPlans()">Conoce más</button>
+        </section>
+
+        <!-- Sección Nosotros -->
+        <section id="nosotros" class="section">
+            <h2>¿Quiénes somos?</h2>
+            <p>Somos Fixify, una empresa dedicada a simplificar tu vida. Conectamos a profesionales capacitados con tus necesidades del hogar, ofreciendo soluciones rápidas y confiables para arreglos esenciales. Nuestra misión es que tengas paz mental con una suscripción accesible y un servicio de calidad garantizado.</p>
+        </section>
+
+        <!-- Sección Servicios -->
+        <section id="servicios" class="section">
+            <h2>Nuestros servicios</h2>
+            <ul class="services-list">
+                <li><a href="#" onclick="showServiceModal('cerrajeria')">Cerrajería</a></li>
+                <li><a href="#" onclick="showServiceModal('plomeria')">Plomería</a></li>
+                <li><a href="#" onclick="showServiceModal('electricidad')">Electricidad</a></li>
+                <li><a href="#" onclick="showServiceModal('otros')">Ver más servicios</a></li>
+            </ul>
+        </section>
+
+        <!-- Modal de Servicios -->
+        <div id="service-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2 id="service-title">Detalles del servicio</h2>
+                <div id="service-description"></div>
+                <button onclick="hideServiceModal()" class="back-btn">Volver</button>
+            </div>
+        </div>
+
+        <!-- Sección Planes -->
+        <section id="plans" class="section">
+            <h2>Nuestros planes</h2>
+            <p>Elige la suscripción que mejor se adapte a vos. Cada plan incluye atención en 48 horas hábiles y profesionales certificados.</p>
+            <div class="plans-container">
+                <div class="plan-card" onclick="showPlanModal('basico')">
+                    <h3>Básico</h3>
+                    <p>$20/mes</p>
+                    <p>1 servicio mensual incluido</p>
+                    <button class="subscribe-btn">Conocer más</button>
+                </div>
+                <div class="plan-card" onclick="showPlanModal('plus')">
+                    <h3>Plus</h3>
+                    <p>$50/mes</p>
+                    <p>3 servicios mensuales incluidos</p>
+                    <button class="subscribe-btn">Conocer más</button>
+                </div>
+                <div class="plan-card" onclick="showPlanModal('elite')">
+                    <h3>Elite</h3>
+                    <p>$70/mes</p>
+                    <p>Servicios ilimitados</p>
+                    <button class="subscribe-btn">Conocer más</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modal de Planes -->
+        <div id="plan-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2 id="plan-title">Detalles del plan</h2>
+                <div id="plan-description"></div>
+                <button onclick="subscribe()" class="subscribe-btn">Suscribir</button>
+                <button onclick="hidePlanModal()" class="back-btn">Volver</button>
+            </div>
+        </div>
+
+        <!-- Sección Contacto -->
+        <section id="contacto" class="section">
+            <h2>Contacto</h2>
+            <p>Escríbenos a <a href="mailto:info@fixify.com">info@fixify.com</a></p>
+            <p>O llámanos al +54 9 11 1234-5678</p>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-links">
+                <p><a href="#" onclick="showLegales()">Legales</a></p>
+                <p><a href="#" onclick="showArrepentimiento()">Botón de arrepentimiento</a></p>
+                <p><a href="mailto:atencion@fixify.com">Atención al cliente</a></p>
+            </div>
+            <p>Fixify - Todos los derechos reservados © 2025</p>
+        </footer>
+    </div>
+
+    <!-- Pantalla de Login -->
+    <div id="login-screen" class="login-screen hidden">
+        <h2>Iniciar sesión</h2>
+        <input type="tel" placeholder="Teléfono" id="phone-input">
+        <input type="password" placeholder="Contraseña" id="password-input">
+        <button onclick="login()">Ingresar</button>
+    </div>
+
+    <!-- Panel de Usuario -->
+    <div id="user-panel" class="user-panel hidden">
+        <header class="panel-header">
+            <h2>Bienvenid@, <span class="user-name">Enzo</span></h2>
+            <button class="logout-btn" onclick="logout()">Cerrar sesión</button>
+        </header>
+        <div class="panel-content">
+            <!-- Estado de Suscripción -->
+            <section class="panel-section">
+                <h3>Tu suscripción</h3>
+                <p>Plan: Básico ($20/mes)</p>
+                <p>Estado: Activa (próximo pago: 18/04/2025)</p>
+                <button onclick="scrollToPlans()">Mejorar plan</button>
+            </section>
+
+            <!-- Solicitar Servicio -->
+            <section class="panel-section">
+                <h3>Solicitar servicio</h3>
+                <select id="service-select">
+                    <option value="">Selecciona un servicio</option>
+                    <option value="cerrajeria">Cerrajería</option>
+                    <option value="plomeria">Plomería</option>
+                    <option value="electricidad">Electricidad</option>
+                </select>
+                <select id="day-select">
+                    <option value="">Día disponible</option>
+                    <option value="lunes">Lunes</option>
+                    <option value="martes">Martes</option>
+                    <option value="miercoles">Miércoles</option>
+                    <option value="jueves">Jueves</option>
+                    <option value="viernes">Viernes</option>
+                </select>
+                <select id="time-select">
+                    <option value="">Franja horaria</option>
+                    <option value="morning">Mañana (8-12)</option>
+                    <option value="afternoon">Tarde (14-18)</option>
+                </select>
+                <button onclick="requestService()">Solicitar</button>
+            </section>
+
+            <!-- Historial de Servicios -->
+            <section class="panel-section">
+                <h3>Historial de servicios</h3>
+                <ul id="service-history">
+                    <li>15/03/2025 - Plomería (Completado)</li>
+                    <li>10/02/2025 - Electricidad (Completado)</li>
+                </ul>
+            </section>
+
+            <!-- Historial de Pagos -->
+            <section class="panel-section">
+                <h3>Historial de pagos</h3>
+                <ul id="payment-history">
+                    <li>18/03/2025 - $20 (Pagado)</li>
+                    <li>18/02/2025 - $20 (Pagado)</li>
+                </ul>
+            </section>
+        </div>
+    </div>
+
+    <!-- Sección Legales -->
+    <div id="legales-screen" class="overlay-screen hidden">
+        <h2>Legales</h2>
+        <p>Contrato de servicio: Al suscribirte a Fixify, aceptas que los servicios serán atendidos en un plazo máximo de 48 horas hábiles...</p>
+        <button onclick="hideOverlay()">Volver</button>
+    </div>
+
+    <!-- Botón de Arrepentimiento -->
+    <div id="arrepentimiento-screen" class="overlay-screen hidden">
+        <h2>Botón de arrepentimiento</h2>
+        <form id="arrepentimiento-form">
+            <input type="text" placeholder="Nombre" required>
+            <input type="email" placeholder="Email" required>
+            <textarea placeholder="Motivo de la baja" required></textarea>
+            <button type="submit">Enviar</button>
+            <button type="button" onclick="hideOverlay()">Cancelar</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
