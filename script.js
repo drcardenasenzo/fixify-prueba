@@ -1,6 +1,55 @@
+// Ocultar el loader después de cargar la página
+window.addEventListener('load', function() {
+    const loader = document.querySelector('.loader');
+    setTimeout(() => {
+        loader.style.display = 'none';
+    }, 1000);
+});
+
+// Menú Hamburguesa
+function toggleMenu() {
+    const menu = document.querySelector('.nav-menu');
+    menu.classList.toggle('hidden');
+}
+
+// Cerrar menú al hacer clic fuera
+document.addEventListener('click', function(event) {
+    const menu = document.querySelector('.nav-menu');
+    const hamburger = document.querySelector('.hamburger');
+    if (!menu.contains(event.target) && !hamburger.contains(event.target) && !menu.classList.contains('hidden')) {
+        menu.classList.add('hidden');
+    }
+});
+
+// Scroll Suave
+function scrollToSection(sectionId) {
+    document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+    document.querySelector('.nav-menu').classList.add('hidden');
+    document.getElementById('user-panel').classList.add('hidden');
+    document.querySelector('.main-container').classList.remove('hidden');
+}
+
+// Animación al Scrollear
+const sections = document.querySelectorAll('.section');
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.1 });
+
+sections.forEach(section => observer.observe(section));
+
+// Funciones Existentes
 function showLogin() {
     document.getElementById('login-screen').classList.remove('hidden');
     document.querySelector('.main-container').classList.add('hidden');
+}
+
+function hideLogin() {
+    document.getElementById('login-screen').classList.add('hidden');
+    document.querySelector('.main-container').classList.remove('hidden');
 }
 
 function login() {
@@ -20,7 +69,7 @@ function logout() {
 }
 
 function scrollToPlans() {
-    document.getElementById('plans').scrollIntoView({ behavior: 'smooth' });
+    scrollToSection('plans');
 }
 
 function showServiceModal(service) {
@@ -72,9 +121,21 @@ function hidePlanModal() {
     document.getElementById('plan-modal').classList.add('hidden');
 }
 
-function subscribe() {
-    alert('¡Suscripción realizada con éxito!');
+function showSubscribeModal() {
+    document.getElementById('plan-modal').classList.add('hidden');
+    document.getElementById('subscribe-modal').classList.remove('hidden');
 }
+
+function hideSubscribeModal() {
+    document.getElementById('subscribe-modal').classList.add('hidden');
+    document.getElementById('plan-modal').classList.remove('hidden');
+}
+
+document.getElementById('subscribe-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    alert('¡Suscripción confirmada con éxito!');
+    hideSubscribeModal();
+});
 
 function requestService() {
     const service = document.getElementById('service-select').value;
@@ -85,6 +146,7 @@ function requestService() {
         const newService = document.createElement('li');
         newService.textContent = `${new Date().toLocaleDateString()} - ${service} (${day} - ${time}) (Solicitado)`;
         history.insertBefore(newService, history.firstChild);
+        document.getElementById('service-status').textContent = `Último servicio: Solicitado (${service} - En camino)`;
         alert(`Servicio de ${service} solicitado para el ${day} en ${time}.`);
     } else {
         alert('Por favor, completa todos los campos.');
@@ -109,3 +171,15 @@ document.getElementById('arrepentimiento-form').addEventListener('submit', funct
     alert('Solicitud de baja enviada con éxito.');
     hideOverlay();
 });
+
+// FAQ Desplegable
+function toggleFAQ(element) {
+    const answer = element.nextElementSibling;
+    if (answer.classList.contains('hidden')) {
+        answer.classList.remove('hidden');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+    } else {
+        answer.style.maxHeight = '0';
+        setTimeout(() => answer.classList.add('hidden'), 300);
+    }
+}

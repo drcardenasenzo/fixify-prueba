@@ -8,12 +8,29 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Open+Sans&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Animación de Carga -->
+    <div class="loader">
+        <h1>Fixify</h1>
+    </div>
+
     <!-- Página Principal -->
     <div class="main-container">
         <!-- Header -->
         <header class="header">
             <h1 class="logo">Fixify</h1>
-            <button class="login-btn" onclick="showLogin()">Ingresar</button>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <nav class="nav-menu hidden">
+                <a href="#inicio" onclick="scrollToSection('inicio')">Inicio</a>
+                <a href="#plans" onclick="scrollToSection('plans')">Nuestros Planes</a>
+                <a href="#servicios" onclick="scrollToSection('servicios')">Servicios</a>
+                <a href="#faq" onclick="scrollToSection('faq')">FAQ</a>
+                <a href="#contacto" onclick="scrollToSection('contacto')">Contacto</a>
+                <button class="login-btn" onclick="showLogin()">Ingresar</button>
+            </nav>
         </header>
 
         <!-- Sección Inicio -->
@@ -22,32 +39,6 @@
             <p>Suscríbete desde $20 al mes y olvídate de los problemas cotidianos.</p>
             <button class="cta-btn" onclick="scrollToPlans()">Conoce más</button>
         </section>
-
-        <!-- Sección Nosotros -->
-        <section id="nosotros" class="section">
-            <h2>¿Quiénes somos?</h2>
-            <p>Somos Fixify, una empresa dedicada a simplificar tu vida. Conectamos a profesionales capacitados con tus necesidades del hogar, ofreciendo soluciones rápidas y confiables para arreglos esenciales. Nuestra misión es que tengas paz mental con una suscripción accesible y un servicio de calidad garantizado.</p>
-        </section>
-
-        <!-- Sección Servicios -->
-        <section id="servicios" class="section">
-            <h2>Nuestros servicios</h2>
-            <ul class="services-list">
-                <li><a href="#" onclick="showServiceModal('cerrajeria')">Cerrajería</a></li>
-                <li><a href="#" onclick="showServiceModal('plomeria')">Plomería</a></li>
-                <li><a href="#" onclick="showServiceModal('electricidad')">Electricidad</a></li>
-                <li><a href="#" onclick="showServiceModal('otros')">Ver más servicios</a></li>
-            </ul>
-        </section>
-
-        <!-- Modal de Servicios -->
-        <div id="service-modal" class="modal hidden">
-            <div class="modal-content">
-                <h2 id="service-title">Detalles del servicio</h2>
-                <div id="service-description"></div>
-                <button onclick="hideServiceModal()" class="back-btn">Volver</button>
-            </div>
-        </div>
 
         <!-- Sección Planes -->
         <section id="plans" class="section">
@@ -80,24 +71,85 @@
             <div class="modal-content">
                 <h2 id="plan-title">Detalles del plan</h2>
                 <div id="plan-description"></div>
-                <button onclick="subscribe()" class="subscribe-btn">Suscribir</button>
+                <button onclick="showSubscribeModal()" class="subscribe-btn">Suscribir</button>
                 <button onclick="hidePlanModal()" class="back-btn">Volver</button>
             </div>
         </div>
+
+        <!-- Modal de Suscripción -->
+        <div id="subscribe-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2>Suscríbete</h2>
+                <form id="subscribe-form">
+                    <input type="text" placeholder="Nombre completo" required>
+                    <input type="email" placeholder="Correo electrónico" required>
+                    <input type="text" placeholder="Número de tarjeta" required>
+                    <input type="text" placeholder="Fecha de vencimiento (MM/AA)" required>
+                    <input type="text" placeholder="Código CVV" required>
+                    <button type="submit" class="subscribe-btn">Confirmar suscripción</button>
+                    <button type="button" onclick="hideSubscribeModal()" class="back-btn">Volver</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Sección Servicios -->
+        <section id="servicios" class="section">
+            <h2>Nuestros servicios</h2>
+            <ul class="services-list">
+                <li><a href="#" onclick="showServiceModal('cerrajeria')">Cerrajería</a></li>
+                <li><a href="#" onclick="showServiceModal('plomeria')">Plomería</a></li>
+                <li><a href="#" onclick="showServiceModal('electricidad')">Electricidad</a></li>
+                <li><a href="#" onclick="showServiceModal('otros')">Ver más servicios</a></li>
+            </ul>
+        </section>
+
+        <!-- Modal de Servicios -->
+        <div id="service-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2 id="service-title">Detalles del servicio</h2>
+                <div id="service-description"></div>
+                <button onclick="hideServiceModal()" class="back-btn">Volver</button>
+            </div>
+        </div>
+
+        <!-- Sección FAQ -->
+        <section id="faq" class="section">
+            <h2>Preguntas Frecuentes</h2>
+            <div class="faq-item">
+                <h3 onclick="toggleFAQ(this)">¿Qué hago si no estoy en casa?</h3>
+                <p class="faq-answer hidden">Puedes coordinar con el profesional un horario alternativo o dejar a alguien encargado.</p>
+            </div>
+            <div class="faq-item">
+                <h3 onclick="toggleFAQ(this)">¿Cómo cancelo mi suscripción?</h3>
+                <p class="faq-answer hidden">Usá el botón de arrepentimiento o contáctanos por email.</p>
+            </div>
+            <div class="faq-item">
+                <h3 onclick="toggleFAQ(this)">¿Qué pasa si el servicio no me satisface?</h3>
+                <p class="faq-answer hidden">Ofrecemos una garantía de satisfacción. Contáctanos y lo resolvemos.</p>
+            </div>
+            <div class="faq-item">
+                <h3 onclick="toggleFAQ(this)">¿En cuántas horas llegan?</h3>
+                <p class="faq-answer hidden">Dependiendo del plan, entre 12 y 48 horas hábiles.</p>
+            </div>
+            <div class="faq-item">
+                <h3 onclick="toggleFAQ(this)">¿Puedo cambiar de plan?</h3>
+                <p class="faq-answer hidden">Sí, desde tu panel de usuario podés mejorar o ajustar tu plan.</p>
+            </div>
+        </section>
 
         <!-- Sección Contacto -->
         <section id="contacto" class="section">
             <h2>Contacto</h2>
             <p>Escríbenos a <a href="mailto:info@fixify.com">info@fixify.com</a></p>
-            <p>O llámanos al +54 9 11 1234-5678</p>
+            <a href="https://wa.me/5491112345678" class="whatsapp-contact-btn" target="_blank">WhatsApp</a>
         </section>
 
         <!-- Footer -->
         <footer class="footer">
             <div class="footer-links">
-                <p><a href="#" onclick="showLegales()">Legales</a></p>
-                <p><a href="#" onclick="showArrepentimiento()">Botón de arrepentimiento</a></p>
-                <p><a href="mailto:atencion@fixify.com">Atención al cliente</a></p>
+                <a href="#" onclick="showLegales()">Legales</a>
+                <a href="#" onclick="showArrepentimiento()">Botón de arrepentimiento</a>
+                <a href="mailto:atencion@fixify.com">Atención al cliente</a>
             </div>
             <p>Fixify - Todos los derechos reservados © 2025</p>
         </footer>
@@ -106,16 +158,19 @@
     <!-- Pantalla de Login -->
     <div id="login-screen" class="login-screen hidden">
         <h2>Iniciar sesión</h2>
-        <input type="tel" placeholder="Teléfono" id="phone-input">
+        <input type="text" placeholder="Usuario" id="phone-input">
         <input type="password" placeholder="Contraseña" id="password-input">
-        <button onclick="login()">Ingresar</button>
+        <div class="login-buttons">
+            <button onclick="login()">Ingresar</button>
+            <button onclick="hideLogin()" class="back-btn">Atrás</button>
+        </div>
     </div>
 
     <!-- Panel de Usuario -->
     <div id="user-panel" class="user-panel hidden">
         <header class="panel-header">
-            <h2>Bienvenid@, <span class="user-name">Enzo</span></h2>
-            <button class="logout-btn" onclick="logout()">Cerrar sesión</button>
+            <h2>Bienvenid@<br><span class="user-name">Enzo</span></h2>
+            <button class="logout-btn" onclick="logout()">Salir</button>
         </header>
         <div class="panel-content">
             <!-- Estado de Suscripción -->
@@ -124,6 +179,12 @@
                 <p>Plan: Básico ($20/mes)</p>
                 <p>Estado: Activa (próximo pago: 18/04/2025)</p>
                 <button onclick="scrollToPlans()">Mejorar plan</button>
+            </section>
+
+            <!-- Estado del Servicio -->
+            <section class="panel-section">
+                <h3>Estado del servicio</h3>
+                <p id="service-status">Último servicio: Solicitado (Plomería - En camino)</p>
             </section>
 
             <!-- Solicitar Servicio -->
